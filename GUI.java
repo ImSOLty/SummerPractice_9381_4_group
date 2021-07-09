@@ -100,21 +100,21 @@ public class GUI extends JFrame{
     void Algorithm(){
         JLabel algInfo = new JLabel();
         algInfo.setText("<html>" +
-                "    <h1>Kuhn's algorithm.</h1>" +
-                "    <h2><b><i>The algorithm searches for maximal pairwise combination in bipartite graph G[X, Y].</i></b></h2>" +
-                "    <p>The algorithm uses the theorem about maximal pair-combination and complementary chains:</b></p>" +
-                "    <p>A pairwise combination M in a bipartite graph G is maximal if and only if there is no complementary chain in G.</p>" +
-                "    <h2>Algorithm:</h2>" +
+                "    <h1>Алгоритм Куна.</h1>" +
+                "    <h2><b><i>Алгоритм выполняет поиск максимального паросочетания в двудольном графе G[X, Y].</i></b></h2>" +
+                "    <p>Алгоритм использует теорему о максимальном паросочетании и дополняющих цепях:</b></p>" +
+                "    <p>Паросочетание M в двудольном графе G является максимальным тогда и только тогда, когда в G нет дополняющей цепи.</p>" +
+                "    <h2>Алгоритм:</h2>" +
                 "    <ol>" +
-                "        <li>Choose an arbitrary vertex x ∈ X that is not covered by any of the edges of a pairwise combination M," +
-                "            and start a depth search by constructing M-interleaved paths from this vertex</li>" +
-                "        <li>If at some point there is at least one M complementary path and not all vertices of X" +
-                "            are covered by edges of the path - stop the search and invert all edges in the path found, " +
-                "            go to step 1, otherwise go to step 3.</li>" +
-                "        <li>The maximal pairing is found - the edges included in the pairwise combination M.</li>" +
+                "        <li>Выбираем произвольную вершину x ∈ X, не покрытую никаким из ребер паросочетания М," +
+                "            и запускаем поиск в глубину, строя из этой вершины M-чередующиеся пути</li>" +
+                "        <li>Если в какой-то момент находится хотя бы один M-дополняющий путь и не все вершины X" +
+                "            покрыты ребрами паросочетания - останавливаем поиск и инвертируем все рёбра в найденном пути, " +
+                "            переходим к пункту 1. Иначе - переходим к пункту 3.</li>" +
+                "        <li>Максимальное паросочетание найдено - ребра входящие в паросочетание M.</li>" +
                 "    </ol>" +
-                "    <h2>Complexity of the algorithm:</h2>" +
-                "    <p>From each vertex we have to traverse all edges - the complexity is O(EV)</p>" +
+                "    <h2>Сложность алгоритма:</h2>" +
+                "    <p>Из каждой вершины мы должны пройти по всем ребрам – следовательно, сложность O(EV)</p>" +
                 "</html>");
         JOptionPane.showMessageDialog(null,algInfo,"Algorithm",JOptionPane.INFORMATION_MESSAGE);
     }
@@ -122,11 +122,11 @@ public class GUI extends JFrame{
     void Authors(){
         JLabel authorsInfo = new JLabel();
         authorsInfo.setText("<html>\n" +
-                "<p><b>The algorithm was implemented by students of St. Petersburg State Electrotechnical University \"LETI\", group 9381:</b></p>\n" +
+                "<p><b>Программа была выполнена студентами группы 9381 СПбГЭУ \"ЛЭТИ\":</b></p>\n" +
                 "<ul>\n" +
-                "    <li>Ignashov Vadim Maksimovich</li>\n" +
-                "    <li>Matveev Andrey Nikolaevich</li>\n" +
-                "    <li>Semenov Alexander Nikolaevich</li>\n" +
+                "    <li>Игнашов Вадим Максимович</li>\n" +
+                "    <li>Матвеев Андрей Николаевич</li>\n" +
+                "    <li>Семенов Александр Николаевич</li>\n" +
                 "</ul>\n" +
                 "</html>");
         JOptionPane.showMessageDialog(null,authorsInfo,"Authors",JOptionPane.INFORMATION_MESSAGE);
@@ -135,68 +135,62 @@ public class GUI extends JFrame{
     void Instructions(){
         JLabel instructionsInfo = new JLabel();
         instructionsInfo.setText("<html>\n" +
-                "<h1><b>Instructions for using the program:</b></h1>\n" +
+                "<h1><b>Инструкция по пользованию программой:</b></h1>\n" +
                 "<ol>\n" +
                 "    <li>\n" +
-                "        Fill in the information about the bipartite graph in the upper-left window:\n" +
+                "        Заполните информацию о двудольном графе в левом-верхнем окне:\n" +
                 "        <ul>\n" +
-                "            <li>In the text field to the right of \"First graph part\" specify the number of vertices\n" +
-                "                in the left part of the graph, and then name the vertices in the drop-down fields.</li>\n" +
-                "            <li>In the text field to the right of \"Second graph part\" specify the number of vertices\n" +
-                "                in the right part of the graph, and then name the vertices in the drop-down fields.</li>\n" +
-                "            <li>Specify the number of graph edges in the text field to the right of \"Graph edges\", and\n" +
-                "                then select the beginning of an edge from the first part of the graph and the end of an\n" +
-                "                edge from the second part of the graph in the drop-down fields</li>\n" +
+                "            <li>В текстовом поле справа от \"First graph part\" укажите количество вершин в левой доле графа, после чего в выпадающих полях проименуйте вершины.</li>\n" +
+                "            <li>В текстовом поле справа от \"Second graph part\" укажите количество вершин в правой доле графа, после чего в выпадающих полях проименуйте вершины.</li>\n" +
+                "            <li>В текстовом поле справа от \"Graph edges\" укажите количество ребер графа, после чего в выпадающих полях выберите начало ребра из первой доли и конец ребра из второй доли</li>\n" +
                 "        </ul>\n" +
                 "        </br>\n" +
                 "        <ul>\n" +
-                "            <li>To build the graph press the \"Build graph\" button. After that the graph will be built in\n" +
-                "                the right part of the application screen and you will not be able to change it anymore.</li>\n" +
-                "            <li>If necessary - press \"Reset\" button to reset the built graph.</li>\n" +
+                "            <li>Для построения введенного графа - нажмите на кнопку \"Build graph\", после чего в правой части экрана приложения будет построен введенный граф и его изменение будет недоступно.</li>\n" +
+                "            <li>В случае необходимости - нажмите кнопку \"Reset\" для сброса построенного графа.</li>\n" +
                 "        </ul>\n" +
-                "        <p><b>Warning! You can use up to 20 vertices in each part of graph, the maximum possible number of edges\n" +
-                "            is the product of the number of vertices in each part of graph!</b></p>\n" +
+                "        <p><b>Внимание! Можно использовать до 20 вершин в каждой доле графа, максимально возможное количество ребер - произведение количества вершин в каждой доле!</b></p>\n" +
                 "        <br>\n" +
                 "    </li>\n" +
                 "    <li>\n" +
-                "        Use the following buttons to execute the algorithm:\n" +
+                "        Для выполнения алгоритма воспользуйтесь следующими кнопками:\n" +
                 "        <ul>\n" +
-                "            <li>\"Algorithm simulation\" - the consecutive execution of the algorithm from the beginning to the end</li>\n" +
-                "            <li>\"Step further\" - executing the step of the algorithm</li>\n" +
-                "            <li>\"Step back\" - the return of the execution of the step of algorithm</li>\n" +
-                "            <li>\"Iteration further\" - the execution of the iteration of algorithm</li>\n" +
-                "            <li>\"Iteration back\" - return the execution of the iteration of the algorithm</li>\n" +
+                "            <li>\"Algorithm simulation\" - последовательное выполнение алгоритма от начала до конца</li>\n" +
+                "            <li>\"Step further\" - выполнение шага алгоритма</li>\n" +
+                "            <li>\"Step back\" - возврат выполнения шага алгоритма</li>\n" +
+                "            <li>\"Iteration further\" - выполнение итерации алгоритма</li>\n" +
+                "            <li>\"Iteration back\" - возврат выполнения итерации алгоритма</li>\n" +
                 "        </ul>\n" +
-                "        <p>Below, in the \"Iteration:\" window the number of executed iterations is specified</p>\n" +
-                "        <p>The box to the right of the buttons displays logs of the performed actions</p>\n" +
+                "        <p>Ниже, в окошке \"Iteration: \" указывается количество выполненных итераций</p>\n" +
+                "        <p>В окошке справа от кнопок выводятся логи выполненных действий</p>\n" +
                 "        <br>\n" +
                 "    </li>\n" +
                 "    <li>\n" +
-                "        Use the context menu to open/save the graph:\n" +
+                "        Для открытия/сохранения графа воспользуйтесь контекстными меню:\n" +
                 "        <ul>\n" +
-                "            <li>\"File\" -> \"Open graph\"</li>\n" +
-                "            <li>\"File\" -> \"Save graph\"</li>\n" +
+                "            <li>\"File -> Open graph\"</li>\n" +
+                "            <li>\"File -> Save graph\"</li>\n" +
                 "        </ul>\n" +
                 "    </li>\n" +
                 "    <li>\n" +
-                "        Use the context menu to get information about the algorithm description:\n" +
+                "        Для получения информации об описании алгоритма воспользуйтесь контекстным меню:\n" +
                 "        <ul>\n" +
-                "            <li>\"Algorithm\" -> \"Algorithm description\"</li>\n" +
+                "            <li>\"Algorithm -> Algorithm description\"</li>\n" +
                 "        </ul>\n" +
                 "    </li>\n" +
                 "    <li>\n" +
-                "        To get the instructions on using the program, use the context menu:\n" +
+                "        Для получения инструкции по пользованию программой воспользуйтесь контекстным меню:\n" +
                 "        <ul>\n" +
-                "            <li>\"Info\" -> \"How to use\"</li>\n" +
+                "            <li>\"Info -> How to use\"</li>\n" +
                 "        </ul>\n" +
                 "    </li>\n" +
                 "    <li>\n" +
-                "        To get the information about the authors of the application, use the context menu:\n" +
+                "        Для получения информации об авторах приложения воспользуйтесь контекстным меню:\n" +
                 "        <ul>\n" +
-                "            <li>\"Info\" -> \"Authors\"</li>\n" +
+                "            <li>\"Info -> Authors\"</li>\n" +
                 "        </ul>\n" +
                 "    </li>\n" +
-                "    <h2>Thank you for using this application! Have a nice day!</h2>\n" +
+                "    <h2>Приносим благодарность за использование данного приложения! Приятной работы!</h2>\n" +
                 "</ol>\n" +
                 "</html>");
         JOptionPane.showMessageDialog(null,instructionsInfo,"Instructions",JOptionPane.INFORMATION_MESSAGE);

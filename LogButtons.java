@@ -174,14 +174,6 @@ public class LogButtons extends JPanel {
     void Clear(){
         graph.setVisible(false);
         blockUnblock(true);
-        info.first.num.setText("");
-        info.second.num.setText("");
-        for(int i=0;i<info.first.MAX_SIZE;i++){
-            info.first.vertex[i].text.setText("");
-        }
-        for(int i=0;i<info.second.MAX_SIZE;i++){
-            info.second.vertex[i].text.setText("");
-        }
     }
 
     Errors checkInfo(){
