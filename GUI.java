@@ -1,20 +1,22 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 
 public class GUI extends JFrame{
     GraphInfo info=new GraphInfo();
-    Graph g;
+    GraphView g;
     LogButtons lb;
     public GUI(){
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//Exiting the program, when X pressed
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);//Fullscreen without window pales
         Container container=this.getContentPane();//Container, that involves the content in frame
 
-        g=new Graph(info);
+        g=new GraphView(info);
         lb = new LogButtons(g,info);
         //Left both panels
         JPanel leftpanel = new JPanel();
@@ -36,11 +38,11 @@ public class GUI extends JFrame{
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         JMenu fileMenu = new JMenu("File");
-        JMenuItem first = new JMenuItem("Open Graph");
-        JMenuItem second = new JMenuItem("Save Graph");
+        JMenuItem open = new JMenuItem("Open Graph");
+        JMenuItem save = new JMenuItem("Save Graph");
 
-        fileMenu.add(first);
-        fileMenu.add(second);
+        fileMenu.add(open);
+        fileMenu.add(save);
 
         JMenu algorithmMenu = new JMenu("Algorithm");
         JMenuItem algorithmDescription = new JMenuItem("Algorithm description");
@@ -72,6 +74,20 @@ public class GUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Instructions();
+            }
+        });
+
+        open.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OpenFile();
+            }
+        });
+
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SaveFile();
             }
         });
 
@@ -184,5 +200,61 @@ public class GUI extends JFrame{
                 "</ol>\n" +
                 "</html>");
         JOptionPane.showMessageDialog(null,instructionsInfo,"Instructions",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    void SaveFile(){
+        if(Quna.graph==null){
+            return;
+        }
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to save");
+        int userSelect = fileChooser.showSaveDialog(null);
+        if(userSelect == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            Quna.outputToFile(file.getAbsolutePath());
+        }else{
+            return;
+        }
+    }
+
+    void OpenFile(){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to open");
+        int userSelect = fileChooser.showOpenDialog(null);
+        if(userSelect == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            Quna.graph = Quna.inputGraphFromFile(file.getAbsolutePath());
+        }else{
+            return;
+        }
+
+        ArrayList<Graph.LeftVertex> tmpLeft = Quna.graph.getLeftVertexes();
+        ArrayList<Graph.RightVertex> tmpRight = Quna.graph.getRightVertexes();
+        ArrayList<Edge> tmpEdges = Quna.graph.getEdges();
+
+        info.first.num.setText(Integer.toString(tmpLeft.size()));
+        info.second.num.setText(Integer.toString(tmpRight.size()));
+        for(int i=0;i<info.first.showing;i++){
+            info.first.vertex[i].text.setText(tmpLeft.get(i).name);
+        }
+        for(int i=0;i<info.second.showing;i++){
+            info.second.vertex[i].text.setText(tmpRight.get(i).name);
+        }
+        info.edges.num.setText(Integer.toString(tmpEdges.size()));
+        for(int i=0;i<info.edges.showing;i++){
+            for(int j=0;j<info.first.showing;j++){
+                if(tmpEdges.get(i).getLeftVertex().name.equals(info.first.vertex[j].text.getText())) {
+                    info.edges.edges[i].first.setSelectedIndex(j);
+                    break;
+                }
+            }
+            for(int j=0;j<info.second.showing;j++){
+                if(tmpEdges.get(i).getRightVertex().name.equals(info.second.vertex[j].text.getText())) {
+                    info.edges.edges[i].second.setSelectedIndex(j);
+                    break;
+                }
+            }
+        }
+        lb.LogField.setText(Quna.logger.getLogMes().toString());
     }
 }
