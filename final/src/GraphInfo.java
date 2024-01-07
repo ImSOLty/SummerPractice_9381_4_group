@@ -6,7 +6,6 @@ public class GraphInfo extends JPanel {
     public GraphPart first=new GraphPart("First graph part");
     public GraphPart second=new GraphPart("Second graph part");
     public GraphEdges edges =new GraphEdges(first,second);
-
     public GraphInfo(){
         first.edges=edges;
         second.edges=edges;

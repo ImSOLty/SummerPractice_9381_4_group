@@ -1,1 +1,2 @@
-# SummerPractice_9381_4_group
+A program with a graphical interface that allows to visualize Kuhn's algorithm. The user has the opportunity to set input data for the algorithm using the graphical interface, as well as the possibility of step-by-step execution of the algorithm with viewing its intermediate states. 
+During the development the following technology stack was used: Java programming language, Swing user interface development framework and JUnit unit testing framework. 

@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Graph extends JComponent {
+public class GraphView extends JComponent {
     GraphInfo inf = new GraphInfo();
     Vector2[] firstPos = new Vector2[inf.first.MAX_SIZE];
     Vector2[] secondPos = new Vector2[inf.second.MAX_SIZE];
@@ -18,6 +18,8 @@ public class Graph extends JComponent {
 
 
     public void paint(Graphics g){
+        //if (Quna.graph == null) return;
+
         int countLeft = inf.first.showing;
         int countRight = inf.second.showing;
         int startx = getWidth()/2;
@@ -37,23 +39,35 @@ public class Graph extends JComponent {
         for(int i=-countRight/2;i<countRight/2+ex2;i++){
             int x=startx+gap-radius/2;
             int y=starty+i*fullset;
-            secondPos[i+countLeft/2]=new Vector2(x,y);
+            secondPos[i+countRight/2]=new Vector2(x,y);
         }
         for(int i=0;i<inf.edges.showing;i++){
-            for(int j=0;j<inf.first.showing;j++){
-                int tmp;
-                tmp = inf.edges.edges[i].first.getSelectedIndex();
-                edgesStartPoint[i]=new Vector2(startx-gap,starty+(tmp-countLeft/2)*fullset+radius/2);
-                tmp = inf.edges.edges[i].second.getSelectedIndex();
-                edgesEndPoint[i]=new Vector2(startx+gap,starty+(tmp-countLeft/2)*fullset+radius/2);
-            }
+            int tmp;
+            tmp = inf.edges.edges[i].first.getSelectedIndex();
+            edgesStartPoint[i]=new Vector2(startx-gap,starty+(tmp-countLeft/2)*fullset+radius/2);
+            tmp = inf.edges.edges[i].second.getSelectedIndex();
+            edgesEndPoint[i]=new Vector2(startx+gap,starty+(tmp-countRight/2)*fullset+radius/2);
         }
+
+        // edges.showing - сколько рёбер добавил пользвователь
         for(int i=0;i<inf.edges.showing;i++){
-            g.drawLine(edgesStartPoint[i].x,edgesStartPoint[i].y,edgesEndPoint[i].x,edgesEndPoint[i].y);
+            Graphics2D g2 = (Graphics2D)g;
+            if (Quna.graph.findEdges(inf.first.vertex[inf.edges.edges[i].first.getSelectedIndex()].text.getText(), inf.second.vertex[inf.edges.edges[i].second.getSelectedIndex()].text.getText()).getIsResearchingNow())
+                g2.setStroke(new BasicStroke(6));
+            else g2.setStroke(new BasicStroke(2));
+            if (Quna.graph.findEdges(inf.first.vertex[inf.edges.edges[i].first.getSelectedIndex()].text.getText(), inf.second.vertex[inf.edges.edges[i].second.getSelectedIndex()].text.getText()).isIncludeMatching())
+                g2.setColor(Color.blue);
+            else g2.setColor(Color.cyan);
+            g2.drawLine(edgesStartPoint[i].x,edgesStartPoint[i].y,edgesEndPoint[i].x,edgesEndPoint[i].y);
+            g2.setStroke(new BasicStroke(1));
         }
         g.setFont(new Font("Arial",Font.PLAIN,18));
         for(int i=0;i<countLeft;i++){
-            g.setColor(Color.LIGHT_GRAY);
+            if (Quna.graph.findLeftVertex(inf.first.vertex[i].text.getText()).getResearchingNow()) g.setColor(Color.RED);
+            else {
+                if (Quna.graph.findLeftVertex(inf.first.vertex[i].text.getText()).getPassed()) g.setColor(Color.GREEN);
+                else g.setColor(Color.LIGHT_GRAY);
+            }
             g.fillOval(firstPos[i].x,firstPos[i].y,radius,radius);
             g.setColor(Color.BLACK);
             g.drawOval(firstPos[i].x,firstPos[i].y,radius,radius);
@@ -61,7 +75,11 @@ public class Graph extends JComponent {
             g.drawString(text,firstPos[i].x-getFontMetrics(g.getFont()).stringWidth(text)-radius/2,firstPos[i].y+radius/2);
         }
         for(int i=0;i<countRight;i++){
-            g.setColor(Color.LIGHT_GRAY);
+            if (Quna.graph.findRightVertex(inf.second.vertex[i].text.getText()).getResearchingNow()) g.setColor(Color.RED);
+            else {
+                if (Quna.graph.findRightVertex(inf.second.vertex[i].text.getText()).getPassed()) g.setColor(Color.GREEN);
+                else g.setColor(Color.LIGHT_GRAY);
+            }
             g.fillOval(secondPos[i].x,secondPos[i].y,radius,radius);
             g.setColor(Color.BLACK);
             g.drawOval(secondPos[i].x,secondPos[i].y,radius,radius);
@@ -70,7 +88,7 @@ public class Graph extends JComponent {
         }
     }
 
-    public Graph(GraphInfo info){
+    public GraphView(GraphInfo info){
         inf = info;
     }
 }
